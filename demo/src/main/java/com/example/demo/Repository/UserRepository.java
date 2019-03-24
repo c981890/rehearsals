@@ -8,34 +8,34 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository {
 
     /**
-     * Create a new Person
+     * Create a new User
      *
-     * @param person
-     * @return Person
+     * @param user
+     * @return User
      */
-    User create(User person);
+    User create(User user);
 
     /**
-     * Read Person by id
+     * Read User by id
      *
      * @param id
-     * @return Person
+     * @return User
      */
     User read(Long id);
 
     /**
-     * Update person
+     * Update user
      *
-     * @param person
+     * @param user
      */
-    User update(User person);
+    User update(User user);
 
     /**
-     * Delete person
+     * Delete user
      *
-     * @param person
+     * @param user
      */
-    void delete(User person);
+    void delete(User user);
 
     /**
      * close the entity manager factory
