@@ -1,12 +1,19 @@
 package com.example.demo;
 
+import au.com.bytecode.opencsv.CSVReader;
+import com.example.demo.Entity.User;
+import com.example.demo.Repository.UserRepositoryImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.io.*;
+import java.util.Arrays;
+import java.util.List;
+
 @SpringBootApplication
 public class DemoApplication {
-
-	public static void main(String[] args) {
+	@SuppressWarnings("resource")
+	public static void main(String[] args) throws IOException {
 		SpringApplication.run(DemoApplication.class, args);
 
 		/*
@@ -18,6 +25,29 @@ public class DemoApplication {
 		3. Kas siit saab findAll abiga teha vajalikke otsinguid?
 		   https://www.baeldung.com/spring-boot-hibernate
 		 */
+
+		//Build reader instance
+		// CSVReader reader = new CSVReader(new FileReader("src/BX-Users.csv"), ';', '"', 1);
+		CSVReader reader = new CSVReader(
+				new InputStreamReader(new FileInputStream("src/BX-Users.csv"), "UTF-8"),
+				';', '"', 1);
+
+		//Read all rows at once
+		List<String[]> allRows = reader.readAll();
+
+		UserRepositoryImpl userRepositoryImlp = new UserRepositoryImpl();
+
+		//Read CSV line by line and use the string array as you want
+		for(String[] row : allRows){
+
+			int userId = (char) Integer.parseInt(row[0]);
+			String location = row[1];
+
+			int age = Integer.parseInt(row[2]);
+			User user = new User(userId, location, age);
+			userRepositoryImlp.create(user);
+
+		}
 	}
 
 }
