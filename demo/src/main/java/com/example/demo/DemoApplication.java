@@ -1,8 +1,10 @@
 package com.example.demo;
 
 // import au.com.bytecode.opencsv.CSVReader;
+import com.example.demo.Entity.Book;
 import com.example.demo.Entity.Rating;
 import com.example.demo.Entity.User;
+import com.example.demo.Repository.BookRepositoryImpl;
 import com.example.demo.Repository.RatingRepositoryImpl;
 import com.example.demo.Repository.UserRepositoryImpl;
 import com.opencsv.CSVParser;
@@ -61,11 +63,14 @@ public class DemoApplication {
 			User user = new User(userId, location, age);
 			userRepositoryImlp.create(user);
 		}
-/*
+
 		RatingRepositoryImpl ratingRepositoryImpl = new RatingRepositoryImpl();
 		CSVReader readerRating = new CSVReader(new FileReader("src/BX-Book-Ratings.csv"), ';', '"', 1);
 		String[] nextLineRating;
+
 		while ((nextLineRating = readerRating.readNext()) != null) {
+			//System.out.println(id);
+			//id++;
 			int userId = (char) Integer.parseInt(nextLineRating[0]);
 			String isbn = nextLineRating[1];
 			int bookRating = (char) Integer.parseInt(nextLineRating[2]);
@@ -73,7 +78,24 @@ public class DemoApplication {
 			ratingRepositoryImpl.create(rating);
 		}
 
-*/
+		BookRepositoryImpl bookRepositoryImpl = new BookRepositoryImpl();
+		CSVReader readerBook = new CSVReader(new FileReader("src/BX-Books0.csv"), ';', '"', 1);
+		String[] nextLineBook;
+
+		while((nextLineBook = readerBook.readNext()) != null) {
+			String isbn = nextLineBook[0];
+			String bookTitle = nextLineBook[1];
+			String bookAuthor = nextLineBook[2];
+			int year = (char) Integer.parseInt(nextLineBook[3]);
+			String publisher = nextLineBook[4];
+			String imageUrlS = nextLineBook[5];
+			String imageUrlM = nextLineBook[6];
+			String imageUrlL = nextLineBook[7];
+			Book book = new Book(isbn, bookTitle, bookAuthor, year, publisher, imageUrlS, imageUrlM, imageUrlL);
+			bookRepositoryImpl.create(book);
+		}
+
+
 
 
 		/*CSVReader reader = new CSVReader(new FileReader("src/BX-Users.csv"), ';', '"', 1);

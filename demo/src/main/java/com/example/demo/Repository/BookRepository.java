@@ -1,40 +1,39 @@
 package com.example.demo.Repository;
 
-import com.example.demo.Entity.Rating;
+import com.example.demo.Entity.Book;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
-public interface RatingRepository {
+public interface BookRepository {
     /**
-     * Create a new Rating
+     * Create a new Book
      *
-     * @param rating
-     * @return Rating
+     * @param book
+     * @return Book
      */
-    Rating create(Rating rating);
+    Book create(Book book);
 
     /**
-     * Read Rating by id
+     * Read Book by id
      *
      * @param id
      * @return Rating
      */
-    Rating read(Long id);
+    Book read(Long id);
 
     /**
      * Update rating
      *
-     * @param rating
+     * @param book
      */
-    Rating update(Rating rating);
+    Book update(Book book);
 
     /**
      * Delete rating
      *
-     * @param rating
+     * @param book
      */
-    void delete(Rating rating);
+    void delete(Book book);
 
     /**
      * close the entity manager factory
