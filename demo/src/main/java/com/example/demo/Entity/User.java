@@ -1,16 +1,25 @@
 package com.example.demo.Entity;
 
+import org.hibernate.search.annotations.*;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="users")
+@Indexed
 public class User {
+
     @Id
-    private int userId;
+    private Integer userId;
+
+    @Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
     private String location;
-    private int age;
+
+    @Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
+    @NumericField
+    private Integer age;
 
     public User() {
 
@@ -22,7 +31,7 @@ public class User {
         this.age = age;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
             return userId;
         }
 
@@ -43,6 +52,16 @@ public class User {
         }
 
     public void setAge(int age) {
-            this.age = age;
-        }
+
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", location='" + location + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }

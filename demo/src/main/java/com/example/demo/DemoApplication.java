@@ -41,7 +41,30 @@ public class DemoApplication {
 
 		//Build reader instance
 		UserRepositoryImpl userRepositoryImlp = new UserRepositoryImpl();
-		CSVReader reader = new CSVReader(new FileReader("src/BX-Users.csv"), ';', '"', 1);
+		CSVReader reader = new CSVReader(new FileReader("src/BX-Users-10K.csv"), ';', '"', 1);
+
+		List<String[]> allRowsUser = reader.readAll();
+		for(String[] row : allRowsUser){
+			int userId = (char) Integer.parseInt(row[0]);
+			String location = row[1];
+			String str = row[2];
+			int number = 0;
+			try
+			{
+				if(str != null)
+					number = Integer.parseInt(str);
+			}
+			catch (NumberFormatException e)
+			{
+				number = 0;
+			}
+			int age = number;
+			User user = new User(userId, location, age);
+			userRepositoryImlp.create(user);
+		}
+
+
+		/*
 		String[] nextLine;
 		while ((nextLine = reader.readNext()) != null) {
 			// nextLine[] is an array of values from the line
@@ -63,44 +86,53 @@ public class DemoApplication {
 			User user = new User(userId, location, age);
 			userRepositoryImlp.create(user);
 		}
+		*/
 
 		RatingRepositoryImpl ratingRepositoryImpl = new RatingRepositoryImpl();
-		CSVReader readerRating = new CSVReader(new FileReader("src/BX-Book-Ratings.csv"), ';', '"', 1);
-		String[] nextLineRating;
-
-		while ((nextLineRating = readerRating.readNext()) != null) {
+		CSVReader readerRating = new CSVReader(new FileReader("src/BX-Book-Ratings-10K.csv"), ';', '"', 1);
+		// String[] nextLineRating;
+		List<String[]> allRowsRating = reader.readAll();
+		for(String[] row : allRowsRating){
 			//System.out.println(id);
 			//id++;
-			int userId = (char) Integer.parseInt(nextLineRating[0]);
-			String isbn = nextLineRating[1];
-			int bookRating = (char) Integer.parseInt(nextLineRating[2]);
+			int userId = (char) Integer.parseInt(row[0]);
+			String isbn = row[1];
+			int bookRating = (char) Integer.parseInt(row[2]);
 			Rating rating = new Rating(userId, isbn, bookRating);
 			ratingRepositoryImpl.create(rating);
 		}
 
 		BookRepositoryImpl bookRepositoryImpl = new BookRepositoryImpl();
-		CSVReader readerBook = new CSVReader(new FileReader("src/BX-Books0.csv"), ';', '"', 1);
-		String[] nextLineBook;
-
-		while((nextLineBook = readerBook.readNext()) != null) {
-			String isbn = nextLineBook[0];
-			String bookTitle = nextLineBook[1];
-			String bookAuthor = nextLineBook[2];
-			int year = (char) Integer.parseInt(nextLineBook[3]);
-			String publisher = nextLineBook[4];
-			String imageUrlS = nextLineBook[5];
-			String imageUrlM = nextLineBook[6];
-			String imageUrlL = nextLineBook[7];
+		CSVReader readerBook = new CSVReader(new FileReader("src/BX-Books-10K.csv"), ';', '"', 1);
+		List<String[]> allRowsBook = reader.readAll();
+		for(String[] row : allRowsBook){
+			String isbn = row[0];
+			String bookTitle = row[1];
+			String bookAuthor = row[2];
+			int year = (char) Integer.parseInt(row[3]);
+			String publisher = row[4];
+			String imageUrlS = row[5];
+			String imageUrlM = row[6];
+			String imageUrlL = row[7];
 			Book book = new Book(isbn, bookTitle, bookAuthor, year, publisher, imageUrlS, imageUrlM, imageUrlL);
 			bookRepositoryImpl.create(book);
 		}
 
+		List result = userRepositoryImlp.search("Denmark");
+		for (Object member : result) {
+			System.out.println(member);
+		}
+
+		List topResult = ratingRepositoryImpl.topItems();
+		System.out.println(topResult);
 
 
 
-		/*CSVReader reader = new CSVReader(new FileReader("src/BX-Users.csv"), ';', '"', 1);
+
+
+		/*CSVReader reader = new CSVReader(new FileReader("src/BX-Users-10K.csv"), ';', '"', 1);
 		/*CSVReader reader = new CSVReader(
-				new InputStreamReader(new FileInputStream("src/BX-Users.csv"), "UTF-8"),
+				new InputStreamReader(new FileInputStream("src/BX-Users-10K.csv"), "UTF-8"),
 				';', '"', 1);*/
 
 		//Read all rows at once
@@ -122,7 +154,7 @@ public class DemoApplication {
 
 
 		/*
-		String SAMPLE_CSV_FILE_PATH = "src/BX-Users.csv";
+		String SAMPLE_CSV_FILE_PATH = "src/BX-Users-10K.csv";
 
 		UserRepositoryImpl userRepositoryImlp = new UserRepositoryImpl();
 
@@ -159,7 +191,7 @@ public class DemoApplication {
 
 	public String oneByOneExample() throws Exception {
 		Reader reader = Files.newBufferedReader(
-				ClassLoader.getSystemResource("src/BX-Users.csv").toURI());
+				ClassLoader.getSystemResource("src/BX-Users-10K.csv").toURI());
 		return CsvReaderExamples.oneByOne(reader).toString();
 	}*/
 

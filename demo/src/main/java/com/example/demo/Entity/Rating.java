@@ -1,5 +1,7 @@
 package com.example.demo.Entity;
 
+import org.hibernate.search.annotations.*;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -7,13 +9,22 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="ratings")
+@Indexed
 public class Rating {
 
     @Id
     @GeneratedValue
     private int identifier;
-    private int userId;
+
+    @Field(index= Index.YES, analyze= Analyze.YES, store= Store.NO)
+    @NumericField
+    private Integer userId;
+
+    @Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
     private String isbn;
+
+    @Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
+    @NumericField
     private int bookRating;
 
     public Rating() {

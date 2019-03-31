@@ -9,5 +9,6 @@
             <property name="hibernate.connection.username" value="sa"/>
             <property name="hibernate.connection.password" value=""/>
         </properties>
+
     </persistence-unit>
 </persistence>

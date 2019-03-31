@@ -1,6 +1,8 @@
 package com.example.demo.Entity;
 
 
+import org.hibernate.search.annotations.*;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -8,16 +10,29 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="books")
+@Indexed
 public class Book {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
+
+    @Field(index= Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String isbn;
+
+    @Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
     private String bookTitle;
+
+    @Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
     private String bookAuthor;
-    private int year;
+
+    @Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
+    @NumericField
+    private Integer year;
+
+    @Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
     private String publisher;
+
     private String imageUrlS;
     private String imageUrlM;
     private String imageUrlL;
